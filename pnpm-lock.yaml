@@ -8,6 +8,9 @@ dependencies:
   '@babel/runtime':
     specifier: ^7.24.0
     version: 7.24.0
+  '@expo-google-fonts/poppins':
+    specifier: ^0.2.3
+    version: 0.2.3
   '@expo/vector-icons':
     specifier: ^14.0.0
     version: 14.0.0
@@ -1627,6 +1630,10 @@ packages:
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
+
+  /@expo-google-fonts/poppins@0.2.3:
+    resolution: {integrity: sha512-PXkur1ZY/puy1PwVFYPJx8qiI3dtBzC2ig1bo53swCt7/sI7krCGYRO6hLBNp15M0kcNh2J4cCR9ZQyFxsving==}
+    dev: false
 
   /@expo/bunyan@4.0.0:
     resolution: {integrity: sha512-Ydf4LidRB/EBI+YrB+cVLqIseiRfjUI/AeHBgjGMtq3GroraDu81OV7zqophRgupngoL3iS3JUMDMnxO7g39qA==}
