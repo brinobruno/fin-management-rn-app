@@ -1,6 +1,11 @@
 import { useState } from 'react'
 
-import { Input, Button, TransactionTypeButton } from '@/components/'
+import {
+  Input,
+  Button,
+  TransactionTypeButton,
+  CategorySelect,
+} from '@/components/'
 import {
   Container,
   Fields,
@@ -42,6 +47,8 @@ export default function Register() {
               isActive={transactionType === 'down'}
             />
           </TransactionTypes>
+
+          <CategorySelect title="Categoria" activeOpacity={0.75} />
         </Fields>
 
         <Button title="Enviar" activeOpacity={0.75} />
