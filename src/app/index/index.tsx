@@ -1,3 +1,5 @@
+import { Link } from 'expo-router'
+
 import { HighlightCard } from '@/components/HighlightCard'
 import {
   Container,
@@ -26,7 +28,9 @@ export default function Dashboard() {
             </User>
           </UserInfo>
 
-          <SignOutIcon name="power" />
+          <Link href="/register/">
+            <SignOutIcon name="power" />
+          </Link>
         </UserWrapper>
       </Header>
 
