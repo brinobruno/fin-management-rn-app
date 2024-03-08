@@ -1,5 +1,6 @@
 import styled from 'styled-components/native'
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'
+import { getBottomSpace } from 'react-native-iphone-x-helper'
 
 export const Container = styled.View`
   flex: 1;
@@ -14,3 +15,10 @@ export const Title = styled.Text`
 
   margin-bottom: 16px;
 `
+
+export const TransactionsList = styled.FlatList.attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    paddingBottom: getBottomSpace(),
+  },
+})``
