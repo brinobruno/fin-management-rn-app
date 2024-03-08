@@ -11,6 +11,7 @@ import {
   UserWrapper,
 } from './styles'
 import { HighlightCards } from '@/components/HighlightCard/styles'
+import { Transactions } from '@/components/Transactions'
 
 export default function Dashboard() {
   return (
@@ -49,6 +50,8 @@ export default function Dashboard() {
           lastTransaction="01 à 16 de abril"
         />
       </HighlightCards>
+
+      <Transactions />
     </Container>
   )
 }
