@@ -1,6 +1,5 @@
 import { Link } from 'expo-router'
 
-import { HighlightCard } from '@/components/HighlightCard'
 import {
   Container,
   Header,
@@ -13,6 +12,7 @@ import {
   UserWrapper,
 } from './styles'
 import { HighlightCards } from '@/components/HighlightCard/styles'
+import { HighlightCard } from '@/components/HighlightCard'
 import { Transactions } from '@/components/Transactions'
 
 export default function Dashboard() {

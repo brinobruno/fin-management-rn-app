@@ -11,7 +11,7 @@ import {
   Separator,
   Footer,
 } from './styles'
-import { Button } from '@/components'
+import { Button } from '../Form/Button'
 
 type CategoryType = {
   key: string
@@ -24,7 +24,7 @@ interface SelectCategoryProps {
   closeSelectCategory: () => void
 }
 
-export default function CategorySelect({
+export function CategorySelect({
   category,
   setCategory,
   closeSelectCategory,
