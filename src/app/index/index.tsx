@@ -22,6 +22,7 @@ export default function Dashboard() {
         <UserWrapper>
           <UserInfo>
             <Photo source={{ uri: 'https://github.com/brinobruno.png' }} />
+
             <User>
               <UserGreeting>Olá,</UserGreeting>
               <UserName>Bruno</UserName>

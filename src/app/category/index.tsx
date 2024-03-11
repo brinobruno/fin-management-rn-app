@@ -1,4 +1,17 @@
-import { Container, Header, Title } from './styles'
+import { FlatList } from 'react-native'
+
+import { categories } from '@/utils/categories'
+import {
+  Container,
+  Header,
+  Title,
+  Category,
+  Icon,
+  Name,
+  Separator,
+  Footer,
+} from './styles'
+import { Button } from '@/components'
 
 type CategoryType = {
   key: string
@@ -6,7 +19,7 @@ type CategoryType = {
 }
 
 interface SelectCategoryProps {
-  category: string
+  category: CategoryType
   setCategory: (category: CategoryType) => void
   closeSelectCategory: () => void
 }
@@ -16,11 +29,40 @@ export default function CategorySelect({
   setCategory,
   closeSelectCategory,
 }: SelectCategoryProps) {
+  function handleCategorySelect(category: CategoryType) {
+    setCategory(category)
+  }
+
   return (
     <Container>
       <Header>
         <Title>Categoria</Title>
       </Header>
+
+      <FlatList
+        data={categories}
+        style={{ flex: 1, width: '100%' }}
+        keyExtractor={(item) => item.key}
+        renderItem={({ item }) => (
+          <Category
+            onPress={() => handleCategorySelect(item)}
+            isActive={category.key === item.key}
+            activeOpacity={0.75}
+          >
+            <Icon name={item.icon} />
+            <Name>{item.name}</Name>
+          </Category>
+        )}
+        ItemSeparatorComponent={() => <Separator />}
+      />
+
+      <Footer>
+        <Button
+          title="Selecionar"
+          activeOpacity={0.75}
+          onPress={closeSelectCategory}
+        />
+      </Footer>
     </Container>
   )
 }
