@@ -96,7 +96,7 @@ export default function Register() {
             placeholder="Preço"
             control={control}
             keyboardType="numeric"
-            error={errors.name ? errors.name.message : undefined}
+            error={errors.amount ? errors.amount.message : undefined}
           />
 
           <TransactionTypes>
