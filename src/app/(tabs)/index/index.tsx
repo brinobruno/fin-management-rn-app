@@ -1,5 +1,3 @@
-import { Link } from 'expo-router'
-
 import {
   Container,
   Header,
@@ -29,9 +27,7 @@ export default function Dashboard() {
             </User>
           </UserInfo>
 
-          <Link href="/register/">
-            <SignOutIcon name="power" />
-          </Link>
+          <SignOutIcon name="power" />
         </UserWrapper>
       </Header>
 
