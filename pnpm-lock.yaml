@@ -23,6 +23,9 @@ dependencies:
   expo:
     specifier: ~50.0.11
     version: 50.0.11(@babel/core@7.24.0)(@react-native/babel-preset@0.73.21)
+  expo-constants:
+    specifier: ~15.4.5
+    version: 15.4.5(expo@50.0.11)
   expo-font:
     specifier: ~11.10.3
     version: 11.10.3(expo@50.0.11)

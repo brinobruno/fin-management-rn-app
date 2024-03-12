@@ -3,7 +3,7 @@ import { Controller, Control, FieldValues } from 'react-hook-form'
 
 import { Input } from '../Input'
 import { Container, ErrorText } from './styles'
-import { FormData } from '@/app/register'
+import { FormData } from '@/app/(tabs)/register'
 
 interface InputProps<T extends FieldValues> extends TextInputProps {
   control: Control<T>

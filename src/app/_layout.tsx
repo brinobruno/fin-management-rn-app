@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
-import { Slot } from 'expo-router'
 import { ThemeProvider } from 'styled-components/native'
 import theme from '@/styles/theme'
 import { StatusBar } from 'expo-status-bar'
 import * as SplashScreen from 'expo-splash-screen'
+import { Stack } from 'expo-router'
 
 import {
   useFonts,
@@ -30,7 +30,10 @@ export default function Layout() {
   return (
     <ThemeProvider theme={theme}>
       <StatusBar style="light" />
-      <Slot />
+
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      </Stack>
     </ThemeProvider>
   )
 }
