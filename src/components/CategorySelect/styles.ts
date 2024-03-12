@@ -15,7 +15,7 @@ export const Container = styled(GestureHandlerRootView)`
 
 export const Header = styled.View`
   width: 100%;
-  height: ${RFValue(132)}px;
+  height: ${RFValue(112)}px;
 
   background-color: ${({ theme }) => theme.colors.primary};
 

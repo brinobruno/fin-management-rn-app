@@ -8,10 +8,12 @@ import {
   UserInfo,
   UserName,
   UserWrapper,
+  LogoutButton,
 } from './styles'
 import { HighlightCards } from '@/components/HighlightCard/styles'
 import { HighlightCard } from '@/components/HighlightCard'
 import { Transactions } from '@/components/Transactions'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 export default function Dashboard() {
   return (
@@ -27,7 +29,11 @@ export default function Dashboard() {
             </User>
           </UserInfo>
 
-          <SignOutIcon name="power" />
+          <GestureHandlerRootView>
+            <LogoutButton onPress={() => {}}>
+              <SignOutIcon name="power" />
+            </LogoutButton>
+          </GestureHandlerRootView>
         </UserWrapper>
       </Header>
 

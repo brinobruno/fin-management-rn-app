@@ -1,16 +1,20 @@
-import { TouchableOpacityProps } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { GestureHandlerRootViewProps } from 'react-native-gesture-handler/lib/typescript/components/GestureHandlerRootView'
 
 import { Container, Category, Icon } from './styles'
 
-interface CategorySelectProps extends TouchableOpacityProps {
+interface CategorySelectProps extends GestureHandlerRootViewProps {
   title: string
+  onPress: () => void
 }
 
 export function CategorySelectButton({ title, ...rest }: CategorySelectProps) {
   return (
-    <Container {...rest}>
-      <Category>{title}</Category>
-      <Icon name="chevron-down" />
-    </Container>
+    <GestureHandlerRootView {...rest}>
+      <Container {...rest}>
+        <Category>{title}</Category>
+        <Icon name="chevron-down" />
+      </Container>
+    </GestureHandlerRootView>
   )
 }

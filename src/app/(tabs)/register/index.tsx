@@ -17,6 +17,7 @@ import { TransactionTypeButton } from '@/components/Form/TransactionTypeButton'
 import { CategorySelectButton } from '@/components/Form/CategorySelectButton'
 import { Button } from '@/components/Form/Button'
 import { CategorySelect } from '@/components/CategorySelect'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 export interface FormData {
   name: string
@@ -116,16 +117,17 @@ export default function Register() {
 
           <CategorySelectButton
             title={category.name}
-            activeOpacity={0.75}
             onPress={handleOpenSelectCategoryModal}
           />
         </Fields>
 
-        <Button
-          title="Enviar"
-          activeOpacity={0.75}
-          onPress={handleSubmit(handleRegister)}
-        />
+        <GestureHandlerRootView>
+          <Button
+            title="Enviar"
+            activeOpacity={0.75}
+            onPress={handleSubmit(handleRegister)}
+          />
+        </GestureHandlerRootView>
 
         <Modal visible={categoryModalOpen}>
           <CategorySelect
