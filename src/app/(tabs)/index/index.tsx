@@ -22,15 +22,39 @@ import { useFocusEffect } from '@react-navigation/native'
 
 const transactionsDataKey = `${constants.storage_name_pattern}:transactions`
 
+type HighlightProps = {
+  amount: string
+}
+
+interface HighlightData {
+  entries: HighlightProps
+  expenses: HighlightProps
+  total: HighlightProps
+}
+
 export default function Dashboard() {
-  const [data, setData] = useState<TransactionData[]>([])
+  const [transactionsData, setTransactionsData] = useState<TransactionData[]>(
+    [],
+  )
+  const [highlightData, setHighlightData] = useState<HighlightData>(
+    {} as HighlightData,
+  )
 
   async function loadTransactions() {
     const response = await AsyncStorage.getItem(transactionsDataKey)
     const transactions = response ? JSON.parse(response) : []
 
+    let entriesSum = 0
+    let expensesSum = 0
+
     const formattedTransactions: TransactionData[] = transactions.map(
       (transaction: TransactionData) => {
+        if (transaction.type === 'positive') {
+          entriesSum += Number(transaction.amount)
+        } else {
+          expensesSum += Number(transaction.amount)
+        }
+
         const amount = Number(transaction.amount).toLocaleString('pt-BR', {
           style: 'currency',
           currency: 'BRL',
@@ -53,7 +77,29 @@ export default function Dashboard() {
       },
     )
 
-    setData(formattedTransactions)
+    const total = entriesSum - expensesSum
+
+    setHighlightData({
+      entries: {
+        amount: entriesSum.toLocaleString('pt-BR', {
+          style: 'currency',
+          currency: 'BRL',
+        }),
+      },
+      expenses: {
+        amount: expensesSum.toLocaleString('pt-BR', {
+          style: 'currency',
+          currency: 'BRL',
+        }),
+      },
+      total: {
+        amount: total.toLocaleString('pt-BR', {
+          style: 'currency',
+          currency: 'BRL',
+        }),
+      },
+    })
+    setTransactionsData(formattedTransactions)
   }
 
   useEffect(() => {
@@ -91,24 +137,24 @@ export default function Dashboard() {
         <HighlightCard
           type="up"
           title="Entradas"
-          amount="R$ 17.400,00"
+          amount={highlightData.entries.amount}
           lastTransaction="Última entrada dia 13 de abril"
         />
         <HighlightCard
           type="down"
           title="Saídas"
-          amount="R$ 1.259,00"
+          amount={highlightData.expenses.amount}
           lastTransaction="Última entrada dia 03 de abril"
         />
         <HighlightCard
           type="total"
           title="Total"
-          amount="R$ 16.141,00"
+          amount={highlightData.total.amount}
           lastTransaction="01 à 16 de abril"
         />
       </HighlightCards>
 
-      <Transactions data={data} />
+      <Transactions data={transactionsData} />
     </Container>
   )
 }
