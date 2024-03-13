@@ -14,10 +14,11 @@ import { HighlightCards } from '@/components/HighlightCard/styles'
 import { HighlightCard } from '@/components/HighlightCard'
 import { Transactions } from '@/components/Transactions'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { TransactionData } from '@/components/TransactionCard'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { constants } from '@/utils/constants'
+import { useFocusEffect } from '@react-navigation/native'
 
 const transactionsDataKey = `${constants.storage_name_pattern}:transactions`
 
@@ -58,6 +59,12 @@ export default function Dashboard() {
   useEffect(() => {
     loadTransactions()
   }, [])
+
+  useFocusEffect(
+    useCallback(() => {
+      loadTransactions()
+    }, []),
+  )
 
   return (
     <Container>
