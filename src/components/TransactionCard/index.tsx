@@ -1,3 +1,4 @@
+import { categories } from '@/utils/categories'
 import {
   Container,
   Title,
@@ -9,17 +10,12 @@ import {
   TransactionDate,
 } from './styles'
 
-type Category = {
-  name: string
-  icon: string
-}
-
 export interface TransactionData {
   id: string
   type: 'positive' | 'negative'
   name: string
   amount: string
-  category: Category
+  category: string
   date: string
 }
 
@@ -28,7 +24,9 @@ export interface TransactionCardProps {
 }
 
 export function TransactionCard({ data }: TransactionCardProps) {
-  const { type, name, amount, category, date } = data
+  const { type, name, amount, date } = data
+
+  const [category] = categories.filter((item) => item.key === data.category)
 
   return (
     <Container>
