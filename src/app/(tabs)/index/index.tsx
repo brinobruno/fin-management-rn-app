@@ -25,6 +25,7 @@ const transactionsDataKey = `${constants.storage_name_pattern}:transactions`
 
 type HighlightProps = {
   amount: string
+  lastTransaction: string
 }
 
 interface HighlightData {
@@ -41,6 +42,21 @@ export default function Dashboard() {
   const [highlightData, setHighlightData] = useState<HighlightData>(
     {} as HighlightData,
   )
+
+  function getLastTransactionDate(
+    collection: TransactionData[],
+    type: 'positive' | 'negative',
+  ) {
+    const lastTransaction = new Date(
+      Math.max(
+        ...collection
+          .filter((transaction) => transaction.type === type)
+          .map((transaction) => new Date(transaction.date).getTime()),
+      ),
+    )
+
+    return `${lastTransaction.getDate()} de ${lastTransaction.toLocaleString('pt-BR', { month: 'long' })}`
+  }
 
   async function loadTransactions() {
     const response = await AsyncStorage.getItem(transactionsDataKey)
@@ -79,6 +95,16 @@ export default function Dashboard() {
       },
     )
 
+    const lastTransactionEntries = getLastTransactionDate(
+      transactions,
+      'positive',
+    )
+    const lastTransactionExpenses = getLastTransactionDate(
+      transactions,
+      'negative',
+    )
+    const totalInterval = `01 a ${lastTransactionExpenses}`
+
     const total = entriesSum - expensesSum
 
     setHighlightData({
@@ -87,18 +113,22 @@ export default function Dashboard() {
           style: 'currency',
           currency: 'BRL',
         }),
+        lastTransaction: `Última entrada dia ${lastTransactionEntries}`,
       },
+
       expenses: {
         amount: expensesSum.toLocaleString('pt-BR', {
           style: 'currency',
           currency: 'BRL',
         }),
+        lastTransaction: `Última saída dia ${lastTransactionExpenses}`,
       },
       total: {
         amount: total.toLocaleString('pt-BR', {
           style: 'currency',
           currency: 'BRL',
         }),
+        lastTransaction: totalInterval,
       },
     })
     setTransactionsData(formattedTransactions)
@@ -145,19 +175,19 @@ export default function Dashboard() {
               type="up"
               title="Entradas"
               amount={highlightData.entries.amount}
-              lastTransaction="Última entrada dia 13 de abril"
+              lastTransaction={highlightData.entries.lastTransaction}
             />
             <HighlightCard
               type="down"
               title="Saídas"
               amount={highlightData.expenses.amount}
-              lastTransaction="Última entrada dia 03 de abril"
+              lastTransaction={highlightData.expenses.lastTransaction}
             />
             <HighlightCard
               type="total"
               title="Total"
               amount={highlightData.total.amount}
-              lastTransaction="01 à 16 de abril"
+              lastTransaction={highlightData.total.lastTransaction}
             />
           </HighlightCards>
 
