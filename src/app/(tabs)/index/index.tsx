@@ -19,6 +19,7 @@ import { TransactionData } from '@/components/TransactionCard'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { constants } from '@/utils/constants'
 import { useFocusEffect } from '@react-navigation/native'
+import { Loading } from '@/components/Loading'
 
 const transactionsDataKey = `${constants.storage_name_pattern}:transactions`
 
@@ -33,6 +34,7 @@ interface HighlightData {
 }
 
 export default function Dashboard() {
+  const [isLoading, setIsLoading] = useState(true)
   const [transactionsData, setTransactionsData] = useState<TransactionData[]>(
     [],
   )
@@ -100,6 +102,7 @@ export default function Dashboard() {
       },
     })
     setTransactionsData(formattedTransactions)
+    setIsLoading(false)
   }
 
   useEffect(() => {
@@ -114,47 +117,53 @@ export default function Dashboard() {
 
   return (
     <Container>
-      <Header>
-        <UserWrapper>
-          <UserInfo>
-            <Photo source={{ uri: 'https://github.com/brinobruno.png' }} />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <Header>
+            <UserWrapper>
+              <UserInfo>
+                <Photo source={{ uri: 'https://github.com/brinobruno.png' }} />
 
-            <User>
-              <UserGreeting>Olá,</UserGreeting>
-              <UserName>Bruno</UserName>
-            </User>
-          </UserInfo>
+                <User>
+                  <UserGreeting>Olá,</UserGreeting>
+                  <UserName>Bruno</UserName>
+                </User>
+              </UserInfo>
 
-          <GestureHandlerRootView>
-            <LogoutButton onPress={() => {}}>
-              <SignOutIcon name="power" />
-            </LogoutButton>
-          </GestureHandlerRootView>
-        </UserWrapper>
-      </Header>
+              <GestureHandlerRootView>
+                <LogoutButton onPress={() => {}}>
+                  <SignOutIcon name="power" />
+                </LogoutButton>
+              </GestureHandlerRootView>
+            </UserWrapper>
+          </Header>
 
-      <HighlightCards>
-        <HighlightCard
-          type="up"
-          title="Entradas"
-          amount={highlightData.entries.amount}
-          lastTransaction="Última entrada dia 13 de abril"
-        />
-        <HighlightCard
-          type="down"
-          title="Saídas"
-          amount={highlightData.expenses.amount}
-          lastTransaction="Última entrada dia 03 de abril"
-        />
-        <HighlightCard
-          type="total"
-          title="Total"
-          amount={highlightData.total.amount}
-          lastTransaction="01 à 16 de abril"
-        />
-      </HighlightCards>
+          <HighlightCards>
+            <HighlightCard
+              type="up"
+              title="Entradas"
+              amount={highlightData.entries.amount}
+              lastTransaction="Última entrada dia 13 de abril"
+            />
+            <HighlightCard
+              type="down"
+              title="Saídas"
+              amount={highlightData.expenses.amount}
+              lastTransaction="Última entrada dia 03 de abril"
+            />
+            <HighlightCard
+              type="total"
+              title="Total"
+              amount={highlightData.total.amount}
+              lastTransaction="01 à 16 de abril"
+            />
+          </HighlightCards>
 
-      <Transactions data={transactionsData} />
+          <Transactions data={transactionsData} />
+        </>
+      )}
     </Container>
   )
 }
