@@ -21,6 +21,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { constants } from '@/utils/constants'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import uuid from 'react-native-uuid'
+import { useNavigation } from 'expo-router'
 
 export interface FormData {
   name: string
@@ -38,6 +39,8 @@ const schema = Yup.object().shape({
 const transactionsDataKey = `${constants.storage_name_pattern}:transactions`
 
 export default function Register() {
+  const navigation = useNavigation()
+
   const [transactionType, setTransactionType] = useState('')
   const [categoryModalOpen, setCategoryModalOpen] = useState(false)
   const [category, setCategory] = useState({
@@ -48,6 +51,7 @@ export default function Register() {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(schema),
@@ -63,6 +67,15 @@ export default function Register() {
 
   function handleOpenSelectCategoryModal() {
     setCategoryModalOpen(true)
+  }
+
+  function resetFields() {
+    reset()
+    setTransactionType('')
+    setCategory({
+      key: 'Category',
+      name: 'Categoria',
+    })
   }
 
   async function handleRegister(form: FormData) {
@@ -91,6 +104,9 @@ export default function Register() {
         transactionsDataKey,
         JSON.stringify(formattedData),
       )
+
+      resetFields()
+      navigation.navigate('index/index' as never)
     } catch (error) {
       console.log(error)
       Alert.alert('Não foi possível salvar')
@@ -102,6 +118,12 @@ export default function Register() {
       const transactions = await AsyncStorage.getItem(transactionsDataKey)
       console.log(transactions)
     }
+
+    // async function RemoveAll() {
+    //   await AsyncStorage.removeItem(transactionsDataKey)
+    // }
+
+    // RemoveAll()
 
     LoadTransactionsData()
   }, [])
