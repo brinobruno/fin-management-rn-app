@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Modal, Alert } from 'react-native'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -18,6 +18,9 @@ import { CategorySelectButton } from '@/components/Form/CategorySelectButton'
 import { Button } from '@/components/Form/Button'
 import { CategorySelect } from '@/components/CategorySelect'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { constants } from '@/utils/constants'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import uuid from 'react-native-uuid'
 
 export interface FormData {
   name: string
@@ -31,6 +34,8 @@ const schema = Yup.object().shape({
     .positive('O valor não pode ser negativo')
     .required('O valor é obrigatório'),
 })
+
+const transactionsDataKey = `${constants.storage_name_pattern}:transactions`
 
 export default function Register() {
   const [transactionType, setTransactionType] = useState('')
@@ -60,20 +65,46 @@ export default function Register() {
     setCategoryModalOpen(true)
   }
 
-  function handleRegister(form: FormData) {
+  async function handleRegister(form: FormData) {
     if (!transactionType) return Alert.alert('Selecione o tipo da transação')
-
     if (category.key === 'category') return Alert.alert('Selecione a categoria')
 
-    const data = {
+    const newTransaction = {
+      id: String(uuid.v4()),
       name: form.name,
       amount: form.amount,
       type: transactionType,
       category: category.key,
+      date: new Date(),
     }
 
-    console.log(data)
+    try {
+      const transactionsData = await AsyncStorage.getItem(transactionsDataKey)
+
+      const currentTransactionsData = transactionsData
+        ? JSON.parse(transactionsData)
+        : []
+
+      const formattedData = [...currentTransactionsData, newTransaction]
+
+      await AsyncStorage.setItem(
+        transactionsDataKey,
+        JSON.stringify(formattedData),
+      )
+    } catch (error) {
+      console.log(error)
+      Alert.alert('Não foi possível salvar')
+    }
   }
+
+  useEffect(() => {
+    async function LoadTransactionsData() {
+      const transactions = await AsyncStorage.getItem(transactionsDataKey)
+      console.log(transactions)
+    }
+
+    LoadTransactionsData()
+  }, [])
 
   return (
     <Container>
