@@ -1,13 +1,27 @@
 import { useEffect, useState } from 'react'
 import { VictoryPie } from 'victory-native'
+import { useTheme } from 'styled-components/native'
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
+import { RFValue } from 'react-native-responsive-fontsize'
+import { addMonths, format, subMonths } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 
 import { HistoryCard } from '@/components/HistoryCard'
-import { LoadTransactionsData } from '@/utils/loadTransactions'
-import { Container, Header, Title, Content, ChartContainer } from './styles'
-import { categories } from '@/utils/categories'
 import { TransactionData } from '@/components/TransactionCard'
-import { RFValue } from 'react-native-responsive-fontsize'
-import { useTheme } from 'styled-components/native'
+import { LoadTransactionsData } from '@/utils/loadTransactions'
+import { categories } from '@/utils/categories'
+import {
+  Container,
+  Header,
+  Title,
+  Content,
+  ChartContainer,
+  MonthSelect,
+  MonthSelectButton,
+  SelectIcon,
+  Month,
+} from './styles'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 interface CategoryData {
   key: string
@@ -21,7 +35,16 @@ interface CategoryData {
 export default function Summary() {
   const theme = useTheme()
 
+  const [selectedDate, setSelectedDate] = useState(new Date())
   const [totalByCategories, setTotalByCategories] = useState<CategoryData[]>([])
+
+  function handleDateChange(action: 'prev' | 'next') {
+    if (action === 'prev') {
+      setSelectedDate(subMonths(selectedDate, 1))
+    } else {
+      setSelectedDate(addMonths(selectedDate, 1))
+    }
+  }
 
   async function ProcessTransactions() {
     const transactions = await LoadTransactionsData()
@@ -80,7 +103,36 @@ export default function Summary() {
         <Title>Resumo por categoria</Title>
       </Header>
 
-      <Content>
+      <Content
+        showsVerticalScrollIndicator={false}
+        style={{
+          flex: 1,
+        }}
+        contentContainerStyle={{
+          padding: 24,
+          paddingBottom: useBottomTabBarHeight(),
+        }}
+      >
+        <MonthSelect>
+          <GestureHandlerRootView>
+            <MonthSelectButton onPress={() => handleDateChange('prev')}>
+              <SelectIcon name="chevron-left" />
+            </MonthSelectButton>
+          </GestureHandlerRootView>
+
+          <Month>
+            {format(selectedDate, 'MMMM, yyyy', {
+              locale: ptBR,
+            })}
+          </Month>
+
+          <GestureHandlerRootView>
+            <MonthSelectButton onPress={() => handleDateChange('next')}>
+              <SelectIcon name="chevron-right" />
+            </MonthSelectButton>
+          </GestureHandlerRootView>
+        </MonthSelect>
+
         <ChartContainer>
           <VictoryPie
             data={totalByCategories}
