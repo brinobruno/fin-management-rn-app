@@ -13,15 +13,21 @@ const keyExtractor = (item: unknown) => {
 export function Transactions({ data }: Props) {
   return (
     <Container>
-      <Title>Listagem</Title>
+      {data.length > 0 ? (
+        <>
+          <Title>Listagem</Title>
 
-      <TransactionsList
-        data={data}
-        keyExtractor={keyExtractor}
-        renderItem={({ item }) => (
-          <TransactionCard data={item as TransactionData} />
-        )}
-      />
+          <TransactionsList
+            data={data}
+            keyExtractor={keyExtractor}
+            renderItem={({ item }) => (
+              <TransactionCard data={item as TransactionData} />
+            )}
+          />
+        </>
+      ) : (
+        <Title>Você ainda não cadastrou transações</Title>
+      )}
     </Container>
   )
 }

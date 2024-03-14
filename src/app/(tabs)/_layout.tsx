@@ -42,6 +42,15 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="summary/index"
+        options={{
+          title: 'Resumo',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons size={size} name="pie-chart" color={color} />
+          ),
+        }}
+      />
     </Tabs>
   )
 }

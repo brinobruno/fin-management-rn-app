@@ -21,7 +21,7 @@ import { constants } from '@/utils/constants'
 import { useFocusEffect } from '@react-navigation/native'
 import { Loading } from '@/components/Loading'
 
-const transactionsDataKey = `${constants.storage_name_pattern}:transactions`
+const transactionsDataKey = constants.transactions_data_key
 
 type HighlightProps = {
   amount: string
@@ -175,19 +175,31 @@ export default function Dashboard() {
               type="up"
               title="Entradas"
               amount={highlightData.entries.amount}
-              lastTransaction={highlightData.entries.lastTransaction}
+              lastTransaction={
+                highlightData.entries.lastTransaction === null
+                  ? highlightData.entries.lastTransaction
+                  : 'Você ainda não registrou entradas'
+              }
             />
             <HighlightCard
               type="down"
               title="Saídas"
               amount={highlightData.expenses.amount}
-              lastTransaction={highlightData.expenses.lastTransaction}
+              lastTransaction={
+                highlightData.expenses.lastTransaction === null
+                  ? highlightData.expenses.lastTransaction
+                  : 'Você ainda não registrou saídas'
+              }
             />
             <HighlightCard
               type="total"
               title="Total"
               amount={highlightData.total.amount}
-              lastTransaction={highlightData.total.lastTransaction}
+              lastTransaction={
+                highlightData.total.lastTransaction === null
+                  ? highlightData.total.lastTransaction
+                  : 'Você ainda não registrou transações'
+              }
             />
           </HighlightCards>
 

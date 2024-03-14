@@ -1,3 +1,5 @@
+const storageNamePattern = '@finmanagement'
+
 export const constants = {
-  storage_name_pattern: '@finmanagement',
+  transactions_data_key: `${storageNamePattern}:transactions`,
 }

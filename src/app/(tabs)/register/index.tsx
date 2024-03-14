@@ -22,6 +22,7 @@ import { constants } from '@/utils/constants'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import uuid from 'react-native-uuid'
 import { useNavigation } from 'expo-router'
+import { LoadTransactionsData } from '@/utils/loadTransactions'
 
 export interface FormData {
   name: string
@@ -36,7 +37,7 @@ const schema = Yup.object().shape({
     .required('O valor é obrigatório'),
 })
 
-const transactionsDataKey = `${constants.storage_name_pattern}:transactions`
+const transactionsDataKey = constants.transactions_data_key
 
 export default function Register() {
   const navigation = useNavigation()
@@ -116,18 +117,13 @@ export default function Register() {
   }
 
   useEffect(() => {
-    async function LoadTransactionsData() {
-      const transactions = await AsyncStorage.getItem(transactionsDataKey)
-      console.log(transactions)
-    }
+    LoadTransactionsData()
 
     // async function RemoveAll() {
     //   await AsyncStorage.removeItem(transactionsDataKey)
     // }
 
     // RemoveAll()
-
-    LoadTransactionsData()
   }, [])
 
   return (
