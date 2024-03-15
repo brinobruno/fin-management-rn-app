@@ -20,6 +20,8 @@ import {
   MonthSelectButton,
   SelectIcon,
   Month,
+  Empty,
+  Notice,
 } from './styles'
 import { useFocusEffect } from '@react-navigation/native'
 
@@ -141,31 +143,41 @@ export default function Summary() {
             </MonthSelectButton>
           </MonthSelect>
 
-          <ChartContainer>
-            <VictoryPie
-              data={totalByCategories}
-              x="percent"
-              y="total"
-              colorScale={totalByCategories.map((category) => category.color)}
-              labelRadius={50}
-              style={{
-                labels: {
-                  fontSize: RFValue(18),
-                  fontWeight: 'bold',
-                  fill: theme.colors.shape,
-                },
-              }}
-            />
-          </ChartContainer>
+          {totalByCategories.length < 0 ? (
+            <>
+              <ChartContainer>
+                <VictoryPie
+                  data={totalByCategories}
+                  x="percent"
+                  y="total"
+                  colorScale={totalByCategories.map(
+                    (category) => category.color,
+                  )}
+                  labelRadius={50}
+                  style={{
+                    labels: {
+                      fontSize: RFValue(18),
+                      fontWeight: 'bold',
+                      fill: theme.colors.shape,
+                    },
+                  }}
+                />
+              </ChartContainer>
 
-          {totalByCategories.map(({ key, name, formattedTotal, color }) => (
-            <HistoryCard
-              key={key}
-              title={name}
-              amount={formattedTotal}
-              color={color}
-            />
-          ))}
+              {totalByCategories.map(({ key, name, formattedTotal, color }) => (
+                <HistoryCard
+                  key={key}
+                  title={name}
+                  amount={formattedTotal}
+                  color={color}
+                />
+              ))}
+            </>
+          ) : (
+            <Empty>
+              <Notice>Não há transações registradas</Notice>
+            </Empty>
+          )}
         </Content>
       )}
     </Container>

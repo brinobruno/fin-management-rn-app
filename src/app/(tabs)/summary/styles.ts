@@ -53,3 +53,14 @@ export const Month = styled.Text`
   font-family: ${({ theme }) => theme.fonts.regular};
   font-size: ${RFValue(20)}px;
 `
+
+export const Empty = styled.View`
+  margin-top: 34px;
+  justify-content: center;
+  align-items: center;
+`
+
+export const Notice = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.regular};
+  font-size: ${RFValue(14)}px;
+`
