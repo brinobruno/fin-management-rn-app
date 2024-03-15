@@ -50,7 +50,10 @@ export default function Summary() {
     const transactions = await LoadTransactionsData()
 
     const expenses = transactions.filter(
-      (expense) => expense.type === 'negative',
+      (expense) =>
+        expense.type === 'negative' &&
+        new Date(expense.date).getMonth() === selectedDate.getMonth() &&
+        new Date(expense.date).getFullYear() === selectedDate.getFullYear(),
     )
 
     const expensesTotal = expenses.reduce(
@@ -95,7 +98,7 @@ export default function Summary() {
 
   useEffect(() => {
     ProcessTransactions()
-  }, [])
+  }, [selectedDate])
 
   return (
     <Container>
