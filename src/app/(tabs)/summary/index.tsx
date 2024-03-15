@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { VictoryPie } from 'victory-native'
 import { useTheme } from 'styled-components/native'
 import { RFValue } from 'react-native-responsive-fontsize'
@@ -35,13 +35,11 @@ interface CategoryData {
 export default function Summary() {
   const theme = useTheme()
 
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [totalByCategories, setTotalByCategories] = useState<CategoryData[]>([])
 
   function handleDateChange(action: 'prev' | 'next') {
-    setIsLoading(true)
-
     if (action === 'prev') {
       setSelectedDate(subMonths(selectedDate, 1))
     } else {
@@ -50,6 +48,8 @@ export default function Summary() {
   }
 
   async function ProcessTransactions() {
+    setIsLoading(true)
+
     const transactions = await LoadTransactionsData()
 
     const expenses = transactions.filter(
@@ -100,14 +100,10 @@ export default function Summary() {
     setIsLoading(false)
   }
 
-  useEffect(() => {
-    ProcessTransactions()
-  }, [selectedDate])
-
   useFocusEffect(
     useCallback(() => {
       ProcessTransactions()
-    }, []),
+    }, [selectedDate]),
   )
 
   return (
