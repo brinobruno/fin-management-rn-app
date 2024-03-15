@@ -33,7 +33,19 @@ export default function Layout() {
       <StatusBar style="light" />
       <GestureHandlerRootView style={{ flex: 1 }}>
         <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="sign-in/index"
+            options={{
+              headerShown: false,
+            }}
+          />
+
+          <Stack.Screen
+            name="(tabs)"
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack>
       </GestureHandlerRootView>
     </ThemeProvider>

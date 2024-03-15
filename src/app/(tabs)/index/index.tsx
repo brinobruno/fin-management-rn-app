@@ -19,6 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { constants } from '@/utils/constants'
 import { useFocusEffect } from '@react-navigation/native'
 import { Loading } from '@/components/Loading'
+import { Link } from 'expo-router'
 
 const transactionsDataKey = constants.transactions_data_key
 
@@ -162,7 +163,9 @@ export default function Dashboard() {
               </UserInfo>
 
               <LogoutButton onPress={() => {}}>
-                <SignOutIcon name="power" />
+                <Link href="./sign-in">
+                  <SignOutIcon name="power" />
+                </Link>
               </LogoutButton>
             </UserWrapper>
           </Header>
