@@ -13,7 +13,6 @@ import {
 import { HighlightCards } from '@/components/HighlightCard/styles'
 import { HighlightCard } from '@/components/HighlightCard'
 import { Transactions } from '@/components/Transactions'
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { useCallback, useEffect, useState } from 'react'
 import { TransactionData } from '@/components/TransactionCard'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -162,17 +161,15 @@ export default function Dashboard() {
                 </User>
               </UserInfo>
 
-              <GestureHandlerRootView>
-                <LogoutButton onPress={() => {}}>
-                  <SignOutIcon name="power" />
-                </LogoutButton>
-              </GestureHandlerRootView>
+              <LogoutButton onPress={() => {}}>
+                <SignOutIcon name="power" />
+              </LogoutButton>
             </UserWrapper>
           </Header>
 
           <HighlightCards>
             <HighlightCard
-              type="up"
+              type="positive"
               title="Entradas"
               amount={highlightData.entries.amount}
               lastTransaction={
@@ -182,7 +179,7 @@ export default function Dashboard() {
               }
             />
             <HighlightCard
-              type="down"
+              type="negative"
               title="Saídas"
               amount={highlightData.expenses.amount}
               lastTransaction={

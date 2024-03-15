@@ -3,7 +3,7 @@ import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'
 import { Feather } from '@expo/vector-icons'
 
 interface CardProps {
-  type: 'up' | 'down' | 'total'
+  type: 'positive' | 'negative' | 'total'
 }
 
 export const HighlightCards = styled.ScrollView.attrs({
@@ -44,13 +44,13 @@ export const Icon = styled(Feather)<CardProps>`
   font-size: ${RFValue(40)}px;
 
   ${({ type }) =>
-    type === 'up' &&
+    type === 'positive' &&
     css`
       color: ${({ theme }) => theme.colors.success};
     `}
 
   ${({ type }) =>
-    type === 'down' &&
+    type === 'negative' &&
     css`
       color: ${({ theme }) => theme.colors.attention};
     `}

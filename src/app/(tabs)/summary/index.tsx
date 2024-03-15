@@ -4,7 +4,6 @@ import { useTheme } from 'styled-components/native'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { addMonths, format, subMonths } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 import { HistoryCard } from '@/components/HistoryCard'
 import { TransactionData } from '@/components/TransactionCard'
@@ -124,11 +123,9 @@ export default function Summary() {
           }}
         >
           <MonthSelect>
-            <GestureHandlerRootView>
-              <MonthSelectButton onPress={() => handleDateChange('prev')}>
-                <SelectIcon name="chevron-left" />
-              </MonthSelectButton>
-            </GestureHandlerRootView>
+            <MonthSelectButton onPress={() => handleDateChange('prev')}>
+              <SelectIcon name="chevron-left" />
+            </MonthSelectButton>
 
             <Month>
               {format(selectedDate, 'MMMM, yyyy', {
@@ -136,11 +133,9 @@ export default function Summary() {
               })}
             </Month>
 
-            <GestureHandlerRootView>
-              <MonthSelectButton onPress={() => handleDateChange('next')}>
-                <SelectIcon name="chevron-right" />
-              </MonthSelectButton>
-            </GestureHandlerRootView>
+            <MonthSelectButton onPress={() => handleDateChange('next')}>
+              <SelectIcon name="chevron-right" />
+            </MonthSelectButton>
           </MonthSelect>
 
           <ChartContainer>

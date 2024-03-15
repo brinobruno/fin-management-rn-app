@@ -11,6 +11,7 @@ import {
   Poppins_500Medium,
   Poppins_700Bold,
 } from '@expo-google-fonts/poppins'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -30,10 +31,11 @@ export default function Layout() {
   return (
     <ThemeProvider theme={theme}>
       <StatusBar style="light" />
-
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      </Stack>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        </Stack>
+      </GestureHandlerRootView>
     </ThemeProvider>
   )
 }

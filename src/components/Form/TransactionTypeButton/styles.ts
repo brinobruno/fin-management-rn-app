@@ -1,43 +1,48 @@
 import styled, { css } from 'styled-components/native'
-import { TouchableOpacity } from 'react-native'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { Feather } from '@expo/vector-icons'
+import { RectButton } from 'react-native-gesture-handler'
 
 interface IconProps {
-  type: 'up' | 'down'
+  type: 'positive' | 'negative'
 }
 
 interface ContainerProps {
   isActive: boolean
-  type: 'up' | 'down'
+  type: 'positive' | 'negative'
 }
 
-export const Container = styled(TouchableOpacity).attrs({})<ContainerProps>`
+export const Container = styled.View<ContainerProps>`
   width: 48%;
-  border-radius: 6px;
-  padding: 16px;
 
+  border-width: ${({ isActive }) => (isActive ? 0 : 1.5)}px;
+  border-color: ${({ theme }) => theme.colors.text};
+  border-style: solid;
+  border-radius: 6px;
+
+  ${({ isActive, type }) =>
+    isActive &&
+    type === 'positive' &&
+    css`
+      background-color: ${({ theme }) => theme.colors.success_light};
+    `};
+
+  ${({ isActive, type }) =>
+    isActive &&
+    type === 'negative' &&
+    css`
+      background-color: ${({ theme }) => theme.colors.attention_light};
+    `};
+`
+
+export const Button = styled(RectButton)`
   flex-direction: row;
   align-items: center;
   justify-content: center;
 
-  border-style: solid;
-  border-color: ${({ theme }) => theme.colors.text};
-  border-width: ${({ isActive }) => (isActive ? 0 : 1.5)}px;
+  padding: 16px;
 
-  ${({ isActive, type }) =>
-    isActive &&
-    type === 'up' &&
-    css`
-      background-color: ${({ theme }) => theme.colors.success_light};
-    `}
-
-  ${({ isActive, type }) =>
-    isActive &&
-    type === 'down' &&
-    css`
-      background-color: ${({ theme }) => theme.colors.attention_light};
-    `}
+  background-color: inherit;
 `
 
 export const Title = styled.Text`
@@ -50,5 +55,5 @@ export const Icon = styled(Feather)<IconProps>`
   margin-right: 12px;
 
   color: ${({ theme, type }) =>
-    type === 'up' ? theme.colors.success : theme.colors.attention};
+    type === 'positive' ? theme.colors.success : theme.colors.attention};
 `

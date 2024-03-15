@@ -17,7 +17,6 @@ import { TransactionTypeButton } from '@/components/Form/TransactionTypeButton'
 import { CategorySelectButton } from '@/components/Form/CategorySelectButton'
 import { Button } from '@/components/Form/Button'
 import { CategorySelect } from '@/components/CategorySelect'
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { constants } from '@/utils/constants'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import uuid from 'react-native-uuid'
@@ -118,12 +117,6 @@ export default function Register() {
 
   useEffect(() => {
     LoadTransactionsData()
-
-    // async function RemoveAll() {
-    //   await AsyncStorage.removeItem(transactionsDataKey)
-    // }
-
-    // RemoveAll()
   }, [])
 
   return (
@@ -154,15 +147,15 @@ export default function Register() {
           <TransactionTypes>
             <TransactionTypeButton
               title="Entrada"
-              type="up"
+              type="positive"
               onPress={() => handleTransactionTypeSelection('positive')}
-              isActive={transactionType === 'up'}
+              isActive={transactionType === 'positive'}
             />
             <TransactionTypeButton
               title="Saída"
-              type="down"
+              type="negative"
               onPress={() => handleTransactionTypeSelection('negative')}
-              isActive={transactionType === 'down'}
+              isActive={transactionType === 'negative'}
             />
           </TransactionTypes>
 
@@ -172,13 +165,11 @@ export default function Register() {
           />
         </Fields>
 
-        <GestureHandlerRootView>
-          <Button
-            title="Enviar"
-            activeOpacity={0.75}
-            onPress={handleSubmit(handleRegister)}
-          />
-        </GestureHandlerRootView>
+        <Button
+          title="Enviar"
+          activeOpacity={0.75}
+          onPress={handleSubmit(handleRegister)}
+        />
 
         <Modal visible={categoryModalOpen}>
           <CategorySelect
