@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { VictoryPie } from 'victory-native'
 import { useTheme } from 'styled-components/native'
 import { RFValue } from 'react-native-responsive-fontsize'
@@ -21,6 +21,7 @@ import {
   SelectIcon,
   Month,
 } from './styles'
+import { useFocusEffect } from '@react-navigation/native'
 
 interface CategoryData {
   key: string
@@ -102,6 +103,12 @@ export default function Summary() {
   useEffect(() => {
     ProcessTransactions()
   }, [selectedDate])
+
+  useFocusEffect(
+    useCallback(() => {
+      ProcessTransactions()
+    }, []),
+  )
 
   return (
     <Container>
