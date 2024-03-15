@@ -143,7 +143,7 @@ export default function Summary() {
             </MonthSelectButton>
           </MonthSelect>
 
-          {totalByCategories.length < 0 ? (
+          {totalByCategories.length > 0 ? (
             <>
               <ChartContainer>
                 <VictoryPie
